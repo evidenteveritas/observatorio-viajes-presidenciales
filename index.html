@@ -17,7 +17,7 @@ h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:0 0 8px}h2{font-size:22
 .note{font-size:14px;color:var(--mu);margin:12px 0 0}
 .bars{display:grid;gap:7px}.b{display:grid;grid-template-columns:150px 1fr 34px;gap:10px;align-items:center;font-size:15px}
 .b i{display:block;height:16px;background:var(--ac);border-radius:3px}.b span:last-child{text-align:right;font-variant-numeric:tabular-nums}
-.yr .b{grid-template-columns:50px 1fr 34px}
+.yr .b{grid-template-columns:50px 1fr 40px}
 .f{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
 select{font:inherit;padding:7px 10px;border:1px solid var(--ln);border-radius:6px;background:var(--sf);color:var(--tx)}
 .tw{overflow-x:auto;border:1px solid var(--ln);border-radius:10px;background:var(--sf)}
@@ -30,12 +30,12 @@ a{color:var(--ac)}a:focus-visible,select:focus-visible{outline:3px solid var(--h
 .meth{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:6px 20px 14px}
 footer{margin-top:40px;font-size:14px;color:var(--mu);border-top:1px solid var(--ln);padding-top:16px}
 @media(max-width:700px){.hero{grid-template-columns:1fr}}@media(max-width:560px){.b{grid-template-columns:110px 1fr 30px}}
-</style></head><body><main>
+.top{background:#0d2e1b;color:#f1f7ee}.top .in{max-width:980px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}.br{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.01em}.soc{display:flex;gap:6px}.soc a{display:flex;width:44px;height:44px;align-items:center;justify-content:center;color:#f1f7ee;border-radius:50%}.soc a:hover{background:#8cfd2b;color:#0d2e1b}.top a:focus-visible{outline:3px solid #8cfd2b;outline-offset:2px}</style></head><body><header class="top"><div class="in"><div class="br"><svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#8cfd2b"/><path d="M20 16 L32 40 L44 16" stroke="#0d2e1b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="32" cy="51" r="4.5" fill="#0d2e1b"/></svg><span>Evidente</span></div><nav class="soc" aria-label="Redes de Evidente"><a href="https://x.com/evidenteveritas" target="_blank" rel="noopener" aria-label="Evidente en X"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><a href="https://www.instagram.com/evidenteveritas/" target="_blank" rel="noopener" aria-label="Evidente en Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></nav></div></header><main>
 <h1>Observatorio de viajes presidenciales</h1>
 <p class="sub">Registro público de los viajes al exterior del presidente José Raúl Mulino durante su administración, con cada viaje contado por país visitado.</p>
 <section class="hero" aria-label="Totales"><div class="k main"><div class="big" id="n1">–</div><p id="l1"></p></div><div class="k main"><div class="big" id="n2">–</div><p id="l2"></p></div><div class="k"><div class="big" id="ng">–</div><p>giras o salidas, que agrupan varios destinos de un mismo recorrido</p></div></section>
 <p class="note" id="st"></p>
-<h2>Viajes por año</h2><div class="bars yr" id="yr"></div>
+<h2>Viajes por año</h2><div class="bars yr" id="yr"></div><p class="note" id="yn"></p>
 <h2>Países más visitados</h2><div class="bars" id="pa"></div>
 <h2>Todos los viajes</h2>
 <div class="f"><select id="fy" aria-label="Año"></select><select id="fp" aria-label="País"></select><select id="fs" aria-label="Estatus"></select></div>
@@ -53,9 +53,9 @@ const fd=s=>{const[a,b,c]=s.split("-");return +c+" "+M[+b-1].slice(0,3)+" "+a};
 const cnt=(a)=>{const o={};a.forEach(k=>o[k]=(o[k]||0)+1);return o};
 $("ng").textContent=new Set(D.filter(r=>r[6]!="Anunciado").map(r=>r[1])).size;
 const c=cnt(D.map(r=>r[6]));const a=c.Anunciado||0,ec=c["En curso"]||0;$("n1").textContent=(c.Concluido||0)+ec;$("l1").textContent="viajes por destino"+(ec?" ("+ec+" en curso)":"");$("n2").textContent="+"+a;$("l2").textContent=(a==1?"viaje anunciado":"viajes anunciados")+", pendiente"+(a==1?"":"s")+" de realizar";$("st").textContent=(c.Concluido||0)+" viajes concluidos, "+ec+" en curso y "+a+" anunciado"+(a==1?"":"s")+".";
-function bars(el,o,sort){let e=Object.entries(o);if(sort)e.sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"es"));const mx=Math.max(...e.map(x=>x[1]));
-el.innerHTML=e.map(([k,v])=>`<div class="b"><span>${k}</span><span><i style="width:${v/mx*100}%"></i></span><span>${v}</span></div>`).join("")}
-bars($("yr"),cnt(D.map(yr)),false);bars($("pa"),cnt(D.map(r=>r[3])),true);
+function bars(el,o,sort,mk){let e=Object.entries(o);if(sort)e.sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"es"));const mx=Math.max(...e.map(x=>x[1]));
+el.innerHTML=e.map(([k,v])=>`<div class="b"><span>${k}</span><span><i style="width:${v/mx*100}%"></i></span><span>${v}${mk&&mk[k]?"*":""}</span></div>`).join("")}
+const R=D.filter(r=>r[6]!="Anunciado"),A={};D.forEach(r=>{if(r[6]=="Anunciado")A[yr(r)]=1});bars($("yr"),cnt(D.map(yr)),false,A);bars($("pa"),cnt(R.map(r=>r[3])),true);const na=D.length-R.length;$("yn").textContent=na?(na==1?"*1 anunciado y pendiente.":"*"+na+" anunciados y pendientes."):"";
 const fill=(el,t,vals)=>{el.innerHTML=`<option value="">${t}</option>`+vals.map(v=>`<option>${v}</option>`).join("")};
 fill($("fy"),"Todos los años",[...new Set(D.map(yr))]);fill($("fp"),"Todos los países",[...new Set(D.map(r=>r[3]))].sort((a,b)=>a.localeCompare(b,"es")));fill($("fs"),"Todos los estatus",["Concluido","En curso","Anunciado"]);
 function draw(){const y=$("fy").value,p=$("fp").value,s=$("fs").value;
