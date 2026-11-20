@@ -9,7 +9,7 @@ main{max-width:980px;margin:0 auto;padding:28px 18px 56px}
 h1,h2,.big,.mid{font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;letter-spacing:-.02em}.mid{font-size:clamp(34px,7vw,46px);line-height:1}.hero.two{margin-top:14px}
 h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:0 0 8px}h2{font-size:22px;margin:40px 0 12px}
 .sub{color:var(--mu);max-width:62ch;margin:0}
-.hero{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.hero{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
 .k{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:18px}
 .k.main{background:var(--hi);color:var(--hit);border-color:var(--hi)}
 .big{font-size:clamp(52px,12vw,92px);line-height:1}.k p{margin:6px 0 0;font-size:15px}
@@ -29,11 +29,11 @@ th{color:var(--mu);font-weight:600;position:sticky;top:0;background:var(--sf)}tr
 a{color:var(--ac)}a:focus-visible,select:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
 .meth{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:6px 20px 14px}
 footer{margin-top:40px;font-size:14px;color:var(--mu);border-top:1px solid var(--ln);padding-top:16px}
-@media(max-width:560px){.hero{grid-template-columns:1fr}.b{grid-template-columns:110px 1fr 30px}}
+@media(max-width:700px){.hero{grid-template-columns:1fr}}@media(max-width:560px){.b{grid-template-columns:110px 1fr 30px}}
 </style></head><body><main>
 <h1>Observatorio de viajes presidenciales</h1>
 <p class="sub">Registro público de los viajes al exterior del presidente José Raúl Mulino durante su administración, con cada viaje contado por país visitado.</p>
-<section class="hero" aria-label="Viajes concluidos o en curso y anunciados"><div class="k main"><div class="big" id="n1">–</div><p>viajes concluidos o en curso</p></div><div class="k main"><div class="big" id="n2">–</div><p id="l2">viajes anunciados</p></div></section><section class="hero two" aria-label="Totales"><div class="k"><div class="mid" id="nd">–</div><p>viajes por destino anunciados hasta ahora (un viaje por cada país visitado)</p></div><div class="k"><div class="mid" id="ng">–</div><p>giras o salidas, que agrupan los destinos de un mismo recorrido</p></div></section>
+<section class="hero" aria-label="Totales"><div class="k main"><div class="big" id="n1">–</div><p id="l1"></p></div><div class="k main"><div class="big" id="n2">–</div><p id="l2"></p></div><div class="k"><div class="big" id="ng">–</div><p>giras o salidas, que agrupan varios destinos de un mismo recorrido</p></div></section>
 <p class="note" id="st"></p>
 <h2>Viajes por año</h2><div class="bars yr" id="yr"></div>
 <h2>Países más visitados</h2><div class="bars" id="pa"></div>
@@ -51,8 +51,8 @@ const D=[[1,1,"2024-07-07","Paraguay","","Cumbre de Mercosur","Concluido","Comun
 const $=id=>document.getElementById(id);const yr=r=>r[2].slice(0,4);
 const fd=s=>{const[a,b,c]=s.split("-");return +c+" "+M[+b-1].slice(0,3)+" "+a};
 const cnt=(a)=>{const o={};a.forEach(k=>o[k]=(o[k]||0)+1);return o};
-$("nd").textContent=D.length;$("ng").textContent=new Set(D.map(r=>r[1])).size;
-const c=cnt(D.map(r=>r[6]));const a=c.Anunciado||0;$("n1").textContent=(c.Concluido||0)+(c["En curso"]||0);$("n2").textContent=a;$("l2").textContent=a==1?"viaje anunciado":"viajes anunciados";$("st").textContent=(c.Concluido||0)+" concluidos, "+(c["En curso"]||0)+" en curso y "+a+" anunciado"+(a==1?"":"s")+".";
+$("ng").textContent=new Set(D.filter(r=>r[6]!="Anunciado").map(r=>r[1])).size;
+const c=cnt(D.map(r=>r[6]));const a=c.Anunciado||0,ec=c["En curso"]||0;$("n1").textContent=(c.Concluido||0)+ec;$("l1").textContent="viajes por destino"+(ec?" ("+ec+" en curso)":"");$("n2").textContent="+"+a;$("l2").textContent=(a==1?"viaje anunciado":"viajes anunciados")+", pendiente"+(a==1?"":"s")+" de realizar";$("st").textContent=(c.Concluido||0)+" viajes concluidos, "+ec+" en curso y "+a+" anunciado"+(a==1?"":"s")+".";
 function bars(el,o,sort){let e=Object.entries(o);if(sort)e.sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"es"));const mx=Math.max(...e.map(x=>x[1]));
 el.innerHTML=e.map(([k,v])=>`<div class="b"><span>${k}</span><span><i style="width:${v/mx*100}%"></i></span><span>${v}</span></div>`).join("")}
 bars($("yr"),cnt(D.map(yr)),false);bars($("pa"),cnt(D.map(r=>r[3])),true);
