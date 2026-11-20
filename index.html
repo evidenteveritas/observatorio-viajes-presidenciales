@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Observatorio de viajes presidenciales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet"><style>
+:root{--bg:#f6f8f3;--sf:#fff;--tx:#14231a;--mu:#5a6b60;--ln:#d6dfd2;--ac:#1f5a34;--hi:#8cfd2b;--hit:#0f2a1a;--an:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a13;--sf:#15251b;--tx:#e8f0e9;--mu:#9db0a3;--ln:#27402f;--ac:#8cfd2b;--hi:#8cfd2b;--hit:#0f2a1a;--an:#f0b45a}}
+:root[data-theme="dark"]{--bg:#0e1a13;--sf:#15251b;--tx:#e8f0e9;--mu:#9db0a3;--ln:#27402f;--ac:#8cfd2b;--hi:#8cfd2b;--hit:#0f2a1a;--an:#f0b45a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 18px 56px}
+h1,h2,.big,.mid{font-family:Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:800;letter-spacing:-.02em}.mid{font-size:clamp(34px,7vw,46px);line-height:1}.hero.two{margin-top:14px}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:0 0 8px}h2{font-size:22px;margin:40px 0 12px}
+.sub{color:var(--mu);max-width:62ch;margin:0}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.k{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:18px}
+.k.main{background:var(--hi);color:var(--hit);border-color:var(--hi)}
+.big{font-size:clamp(52px,12vw,92px);line-height:1}.k p{margin:6px 0 0;font-size:15px}
+.k.main p{color:var(--hit)}.k:not(.main) p{color:var(--mu)}
+.note{font-size:14px;color:var(--mu);margin:12px 0 0}
+.bars{display:grid;gap:7px}.b{display:grid;grid-template-columns:150px 1fr 34px;gap:10px;align-items:center;font-size:15px}
+.b i{display:block;height:16px;background:var(--ac);border-radius:3px}.b span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.yr .b{grid-template-columns:50px 1fr 34px}
+.f{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+select{font:inherit;padding:7px 10px;border:1px solid var(--ln);border-radius:6px;background:var(--sf);color:var(--tx)}
+.tw{overflow-x:auto;border:1px solid var(--ln);border-radius:10px;background:var(--sf)}
+table{border-collapse:collapse;width:100%;min-width:720px;font-size:14.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--ln);vertical-align:top}
+th{color:var(--mu);font-weight:600;position:sticky;top:0;background:var(--sf)}tr:last-child td{border-bottom:0}
+.s{font-size:12.5px;padding:2px 8px;border-radius:99px;border:1px solid var(--ac);color:var(--ac);white-space:nowrap}
+.s.a{border-color:var(--an);color:var(--an)}.s.e{background:var(--hi);color:var(--hit);border-color:var(--hi)}
+a{color:var(--ac)}a:focus-visible,select:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.meth{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:6px 20px 14px}
+footer{margin-top:40px;font-size:14px;color:var(--mu);border-top:1px solid var(--ln);padding-top:16px}
+@media(max-width:560px){.hero{grid-template-columns:1fr}.b{grid-template-columns:110px 1fr 30px}}
+</style></head><body><main>
+<h1>Observatorio de viajes presidenciales</h1>
+<p class="sub">Registro público de los viajes al exterior del presidente José Raúl Mulino durante su administración, con cada viaje contado por país visitado.</p>
+<section class="hero" aria-label="Viajes concluidos o en curso y anunciados"><div class="k main"><div class="big" id="n1">–</div><p>viajes concluidos o en curso</p></div><div class="k main"><div class="big" id="n2">–</div><p id="l2">viajes anunciados</p></div></section><section class="hero two" aria-label="Totales"><div class="k"><div class="mid" id="nd">–</div><p>viajes por destino anunciados hasta ahora (un viaje por cada país visitado)</p></div><div class="k"><div class="mid" id="ng">–</div><p>giras o salidas, que agrupan los destinos de un mismo recorrido</p></div></section>
+<p class="note" id="st"></p>
+<h2>Viajes por año</h2><div class="bars yr" id="yr"></div>
+<h2>Países más visitados</h2><div class="bars" id="pa"></div>
+<h2>Todos los viajes</h2>
+<div class="f"><select id="fy" aria-label="Año"></select><select id="fp" aria-label="País"></select><select id="fs" aria-label="Estatus"></select></div>
+<div class="tw"><table><thead><tr><th>#</th><th>Fecha</th><th>Destino</th><th>Motivo</th><th>Estatus</th><th>Fuente</th></tr></thead><tbody id="tb"></tbody></table></div>
+<h2>Metodología</h2>
+<div class="meth"><p><b>Qué cuenta como viaje.</b> Cada país visitado cuenta como un viaje, porque implica un traslado aéreo, combustible y viáticos propios. Por ejemplo, la gira a Vietnam y Singapur suma dos viajes y una gira.</p>
+<p><b>Giras.</b> Para quien prefiera contar por salida del país, mostramos también el número de giras, que agrupa los destinos consecutivos de un mismo recorrido.</p>
+<p><b>Fechas y estatus.</b> La fecha es la del inicio del viaje al destino. “En curso” significa que el presidente ya llegó al destino y el viaje no ha concluido; “Anunciado” significa que el viaje fue confirmado pero aún no comienza.</p>
+<p><b>Fuentes.</b> Cada viaje indica el tipo de fuente. Para conocer la fuente exacta, usa el botón “Solicitar”, que abre un correo dirigido a nosotros. Pedimos que nos la soliciten para que quien use el dato dé el crédito correspondiente.</p></div>
+<footer><p>Base de datos creada y verificada por los periodistas Mario De Gracia Pérez (@mariodgex) y Yasser Yanez García (@x_yasserj). Contacto: <a href="mailto:reportesveritas@proton.me">reportesveritas@proton.me</a>. Última actualización: 20 de noviembre de 2026.</p></footer>
+</main><script>
+const D=[[1,1,"2024-07-07","Paraguay","","Cumbre de Mercosur","Concluido","Comunicado oficial"],[2,2,"2024-08-15","República Dominicana","","Toma de posesión del presidente Luis Abinader","Concluido","Comunicado oficial"],[3,3,"2024-09-21","Estados Unidos","Nueva York","Asamblea General de la ONU","Concluido","Comunicado oficial"],[4,4,"2024-10-20","Francia","","Reunión con el presidente Emmanuel Macron","Concluido","Comunicado oficial"],[5,5,"2024-12-05","Uruguay","","Mercosur - adhesión formal de Panamá","Concluido","Comunicado oficial"],[6,6,"2025-01-21","Suiza","","Foro Económico Mundial","Concluido","Comunicado oficial"],[7,6,"2025-01-23","Italia","","Reunión con el presidente Sergio Matarella","Concluido","Medios de comunicación"],[8,7,"2025-02-28","Uruguay","","Toma de posesión de Yamandú Orsi","Concluido","Medios de comunicación"],[9,8,"2025-04-10","Perú","","Visita oficial y reunión con la ahora expresidenta Dina Boluarte","Concluido","Medios de comunicación"],[10,9,"2025-05-30","Colombia","","Cumbre de la CELAC","Concluido","Medios de comunicación"],[11,10,"2025-06-27","España","","Encuentro con la comisionada de la Unión Europea y la realeza española","Concluido","Medios de comunicación"],[12,11,"2025-07-02","Argentina","","Cumbre de Mercosur","Concluido","Medios de comunicación"],[13,12,"2025-08-08","Estados Unidos","Nueva York","Consejo de Seguridad","Concluido","Comunicado oficial"],[14,13,"2025-08-26","Brasil","","Reunión Lula Da Silva","Concluido","Comunicado oficial"],[15,14,"2025-09-09","Japón","","Reunión con inversionistas","Concluido","Comunicado oficial"],[16,15,"2025-09-24","Estados Unidos","Nueva York","Asamblea General ONU","Concluido","Comunicado oficial"],[17,16,"2025-11-21","Costa Rica","","Reunión con Rodrigo Chaves","Concluido","Medios de comunicación"],[18,17,"2025-12-07","Noruega","Oslo","Ceremonia del Premio Nobel de la Paz","Concluido","Comunicado oficial"],[19,18,"2025-12-19","Brasil","","LXVII Cumbre del Mercosur","Concluido","Comunicado oficial"],[20,19,"2026-01-16","Paraguay","","Firma del acuerdo Mercosur-UE","Concluido","Comunicado oficial"],[21,20,"2026-01-18","Suiza","","Foro Económico Mundial","Concluido","Comunicado oficial"],[22,21,"2026-03-06","Estados Unidos","Miami","Cumbre del Escudo de las Américas con Donald Trump","Concluido","Medios de comunicación"],[23,22,"2026-03-10","Chile","","Toma de posesión de José Antonio Kast","Concluido","Comunicado oficial"],[24,23,"2026-05-08","Costa Rica","","Toma de posesión de Laura Fernández","Concluido","Comunicado oficial"],[25,24,"2026-06-01","Grecia","","Feria de Posidonia","Concluido","Comunicado oficial"],[26,25,"2026-07-14","México","","Reunión con Sheinbaum","Concluido","Comunicado oficial"],[27,26,"2026-07-27","Perú","","Toma de posesión de Keiko Fujimori","Concluido","Comunicado oficial"],[28,27,"2026-08-07","Colombia","","Toma de posesión de Abelardo de la Espriella","Concluido","Comunicado oficial"],[29,28,"2026-09-04","Ecuador","","Visita oficial y bilateral con su homólogo Daniel Noboa","Concluido","Comunicado oficial"],[30,29,"2026-09-10","Estados Unidos","Nueva York","Asamblea General de la ONU","Concluido","Comunicado oficial"],[31,30,"2026-10-01","Vietnam","","“Atraer inversiones”","Concluido","Comunicado oficial"],[32,30,"2026-10-04","Singapur","","“Atraer inversiones”","Concluido","Comunicado oficial"],[33,31,"2026-11-19","República Dominicana","","World Governments Summit (WGS)","En curso","Comunicado oficial"],[34,32,"2026-12-03","Inglaterra","","Audiencia con el rey Carlos III","Anunciado","Comunicado oficial"]];const M=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const $=id=>document.getElementById(id);const yr=r=>r[2].slice(0,4);
+const fd=s=>{const[a,b,c]=s.split("-");return +c+" "+M[+b-1].slice(0,3)+" "+a};
+const cnt=(a)=>{const o={};a.forEach(k=>o[k]=(o[k]||0)+1);return o};
+$("nd").textContent=D.length;$("ng").textContent=new Set(D.map(r=>r[1])).size;
+const c=cnt(D.map(r=>r[6]));const a=c.Anunciado||0;$("n1").textContent=(c.Concluido||0)+(c["En curso"]||0);$("n2").textContent=a;$("l2").textContent=a==1?"viaje anunciado":"viajes anunciados";$("st").textContent=(c.Concluido||0)+" concluidos, "+(c["En curso"]||0)+" en curso y "+a+" anunciado"+(a==1?"":"s")+".";
+function bars(el,o,sort){let e=Object.entries(o);if(sort)e.sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],"es"));const mx=Math.max(...e.map(x=>x[1]));
+el.innerHTML=e.map(([k,v])=>`<div class="b"><span>${k}</span><span><i style="width:${v/mx*100}%"></i></span><span>${v}</span></div>`).join("")}
+bars($("yr"),cnt(D.map(yr)),false);bars($("pa"),cnt(D.map(r=>r[3])),true);
+const fill=(el,t,vals)=>{el.innerHTML=`<option value="">${t}</option>`+vals.map(v=>`<option>${v}</option>`).join("")};
+fill($("fy"),"Todos los años",[...new Set(D.map(yr))]);fill($("fp"),"Todos los países",[...new Set(D.map(r=>r[3]))].sort((a,b)=>a.localeCompare(b,"es")));fill($("fs"),"Todos los estatus",["Concluido","En curso","Anunciado"]);
+function draw(){const y=$("fy").value,p=$("fp").value,s=$("fs").value;
+$("tb").innerHTML=D.filter(r=>(!y||yr(r)==y)&&(!p||r[3]==p)&&(!s||r[6]==s)).map(r=>{
+const subj=encodeURIComponent("Solicitud de fuente: viaje n.º "+r[0]+" ("+r[3]+", "+fd(r[2])+")");
+const body=encodeURIComponent("Hola, quisiera conocer la fuente del viaje n.º "+r[0]+" del Observatorio de viajes presidenciales. Daré el crédito correspondiente.");
+return`<tr><td>${r[0]}</td><td>${fd(r[2])}</td><td>${r[4]?r[4]+", ":""}${r[3]}</td><td>${r[5]}</td><td><span class="s ${r[6]=="Anunciado"?"a":r[6]=="En curso"?"e":""}">${r[6]}</span></td><td>${r[7]}<br><a href="mailto:reportesveritas@proton.me?subject=${subj}&body=${body}">Solicitar</a></td></tr>`}).join("")}
+["fy","fp","fs"].forEach(i=>$(i).addEventListener("change",draw));draw();
+</script></body></html>
